@@ -9,12 +9,38 @@
 </head>
  
 <header class="header">
+    <!--Kalender-->
     <input type="datetime-local" id="dateTime" step="3600">
+    
+    <!-- Navigation -->
+    <nav aria-label="Hauptnavigation">
+    <!-- Burger-Button (funktional erst mit JS/CSS) -->
+    <button class="burger" aria-expanded="false" aria-controls="hauptmenue">
+      <!-- Hamburger-Icon als SVG -->
+      <svg width="28" height="28" viewBox="0 0 24 24" role="img" aria-hidden="true">
+        <path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"></path>
+      </svg>
+      <span class="sr-only">Menü öffnen</span>
+    </button>
+
+    <!-- Menüeinträge -->
+    <ul id="hauptmenue">
+      <li><a href="#brienz">Brienz</a></li>
+      <li><a href="#interlaken">Interlaken</a></li>
+      <li><a href="#thun">Thun</a></li>
+      <li><a href="#bern">Bern</a></li>
+      <li><a href="#hagneck">Hagneck</a></li>
+      <li><a href="#biel">Biel</a></li>
+      <li><a href="#olten">Olten</a></li>
+      <li><a href="#brugg">Brugg</a></li>
+    </ul>
+  </nav>
 </header>
 <body>
     <h1 class="title" id="title">Wie viel Wasser fliesst in der Aare?</h1>
         <main>
-        
+            <div class="Wassertemperatur">  </div>
+            <input type="datetime-local" id="datePicker">
 
         </main>
     <script src="js/script.js" type="module"></script>
