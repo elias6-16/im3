@@ -1,3 +1,179 @@
+
+/* ==================== GRUNDSTILE ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background-color: lightblue;
+  font-family: 'Montserrat', sans-serif;
+  color: #000;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+}
+
+/* ==================== HINTERGRUNDVIDEO ==================== */
+#background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; /* hinter Inhalt */
+}
+
+/* ==================== HEADER ==================== */
+.header {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  width: 100%;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Kalender oben links */
+#dateTime {
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+#dateTime::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* ==================== NAVIGATION ==================== */
+nav {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Burger-Button für mobile Ansicht */
+.burger {
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  display: none; /* Desktop standardmäßig ausgeblendet */
+}
+
+/* Menüeinträge (Desktop) */
+#hauptmenue {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+#hauptmenue li a {
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+#hauptmenue li a:hover {
+  background: #222;
+}
+
+/* ==================== TITEL UND TEMPERATUR ==================== */
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000;
+  text-shadow: 0 2px 6px rgba(255, 255, 255, 0.5);
+  margin-bottom: 1.2rem;
+}
+
+.Wassertemperatur {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.4);
+  margin-bottom: 1rem;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 768px) {
+  /* Header neu anordnen */
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  /* Kalender bleibt oben */
+  #dateTime {
+    align-self: flex-start;
+  }
+
+  /* Burger-Button aktivieren */
+  .burger {
+    display: block;
+  }
+
+  /* Menü standardmäßig verstecken */
+  #hauptmenue {
+    display: none;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    top: 3rem;
+    right: 0;
+    border-radius: 15px;
+    padding: 1rem;
+  }
+
+  /* Menü sichtbar, wenn aktiv */
+  .burger[aria-expanded="true"] + #hauptmenue {
+    display: flex;
+  }
+
+  #hauptmenue li a {
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Haupttext kleiner */
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .Wassertemperatur {
+    font-size: 1.2rem;
+  }
+}
+
+/* Hintergrundvideo */
+#background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
 }

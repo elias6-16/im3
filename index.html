@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Faster+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <title>Wasserstand Aare</title>
 </head>
  
@@ -24,7 +24,7 @@
     </button>
 
     <!-- Menüeinträge -->
-    <ul id="hauptmenue">
+    <ul id="hauptwmenue">
       <li><a href="#brienz">Brienz</a></li>
       <li><a href="#interlaken">Interlaken</a></li>
       <li><a href="#thun">Thun</a></li>
@@ -36,7 +36,13 @@
     </ul>
   </nav>
 </header>
+
 <body>
+
+   <video autoplay muted loop playsinline id="background-video">
+    <source src="Assets/Video/Animation_final.mp4" type="video/mp4" />
+    </video>
+
     <h1 class="title" id="title">Wie viel Wasser fliesst in der Aare?</h1>
         <main>
             <div class="Wassertemperatur">  </div>
@@ -45,4 +51,4 @@
         </main>
     <script src="js/script.js" type="module"></script>
 </body>
-</html>
+
