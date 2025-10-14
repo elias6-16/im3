@@ -21,3 +21,9 @@ try {
 catch (PDOException $e) {
     die("Verbindung zur Datenbank konnte nicht hergestellt werden: " . $e->getMessage());
 }
+
+
+    /*$sql = "SELECT *
+    FROM aare_data
+    WHERE timestamp BETWEEN DATE_FORMAT(:date, '%Y-%m-%d %H:00:00')
+        AND DATE_ADD(DATE_FORMAT(:date, '%Y-%m-%d %H:00:00'), INTERVAL 59 MINUTE 59 SECOND);"; */
