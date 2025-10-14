@@ -10,9 +10,13 @@ header('Content-Type: application/json');
 try {
     $pdo = new PDO($dsn, $username, $password, $options);
     $date = $_GET['date']; // Datum aus der URL abfragen, z.B. getByDate.php?date=2025-10-13
-    $sql = "SELECT * FROM aare_data WHERE DATE(timestamp) = :date"; 
+        // Start- und Endzeit derselben Stunde berechnen
+        $start = date('Y-m-d H:00:00', strtotime($date));
+        $end   = date('Y-m-d H:59:59', strtotime($date));
+    $sql = "SELECT * FROM aare_data WHERE timestamp BETWEEN :start AND :end"; 
+    //$sql = "SELECT * FROM aare_data WHERE timestamp BETWEEN '2025-10-14 09:00:00' AND '2025-10-14 09:59:59';"; // Dieser Code funktioniert
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(['date' => $date]);
+    $stmt->execute(['start' => $start, 'end' => $end]);
     $results = $stmt->fetchAll();
     echo json_encode($results);
 }
@@ -23,7 +27,3 @@ catch (PDOException $e) {
 }
 
 
-    /*$sql = "SELECT *
-    FROM aare_data
-    WHERE timestamp BETWEEN DATE_FORMAT(:date, '%Y-%m-%d %H:00:00')
-        AND DATE_ADD(DATE_FORMAT(:date, '%Y-%m-%d %H:00:00'), INTERVAL 59 MINUTE 59 SECOND);"; */
