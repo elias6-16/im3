@@ -107,12 +107,120 @@ nav {
   margin-bottom: 1.2rem;
 }
 
-.Wassertemperatur {
-  font-size: 1.5rem;
-  font-weight: 600;
+/* ==================== FLOW / WASSERSTAND ==================== */
+.Flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 1rem;
   color: #000;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.4);
-  margin-bottom: 1rem;
+}
+
+/* Zahl und Einheit nebeneinander */
+.Flow-Value {
+  display: flex;
+  align-items: baseline; /* sorgt für schöne vertikale Ausrichtung */
+  justify-content: center;
+  gap: 0.3rem; /* Abstand zwischen Zahl und Einheit */
+}
+
+/* Zahl (groß und fett) */
+.Zahl-Flow {
+  font-size: 9rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Einheit (kleiner, aber auf gleicher Linie) */
+.Einheit-Flow {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Text darunter */
+.Text-Flow {
+  margin-top: 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+
+.Wassertemperatur {
+  display: flex;
+  align-items: baseline; /* sorgt dafür, dass Text schön auf gleicher Linie steht */
+  justify-content: center; /* zentriert horizontal */
+  gap: 0.5rem; /* Abstand zwischen Zahl und Text */
+  color: #000;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.4);
+}
+
+/* Zahl größer und fett */
+.Zahl-Temp {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* Text daneben etwas kleiner */
+.Text-Temp {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.title {
+  opacity: 0;
+  font-size: 2.5rem;
+  text-align: center;
+  animation: showTitle 6s ease forwards;
+  transform-origin: center;
+}
+ 
+
+/* ==================== ANIMATION: Intro ==================== */
+
+/* Ausgangszustände */
+.title {
+  opacity: 0;
+  animation: showTitle 4s ease forwards;
+}
+
+main {
+  opacity: 0;
+  animation: showMain 4s ease forwards;
+}
+
+/* Keyframes für Titel: Einblenden → Halten → Ausblenden */
+@keyframes showTitle {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* Keyframes für Main: wartet auf Titel und blendet danach ein */
+@keyframes showMain {
+  0%, 65% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0.5;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* ==================== RESPONSIVE DESIGN ==================== */
