@@ -18,11 +18,12 @@ async function getByDate(date) {
         const response = await fetch(url); // holt die Daten von der API
         const data = await response.json(); // lädt die Daten als JSON
         console.log(data); // gibt die Daten der API in der Konsole aus
+            renderBernFlow(data);
     } catch (error) {
     console.error(error)
     }
     }
-getByDate();
+
 
 const datepicker = document.querySelector('#datePicker');
 
@@ -54,6 +55,27 @@ datepicker.addEventListener('change', function() {
     getByDate(date); // API-Aufruf mit dem formatierten Datum
 });
 
+function renderBernFlow(result) {
+  // API liefert Array mit 1 Objekt ODER direkt ein Objekt
+  const row = Array.isArray(result) ? result[0] : result;
+
+  const el = document.getElementById("bernFlow");
+  if (!el) {
+    console.warn("Element #bernFlow nicht gefunden");
+    return;
+  }
+
+  el.textContent = (row && row.bern_flow != null) ? row.bern_flow : "—";
+
+
+
+
+
+
+
+
+
+  
 // Navigation Animiert
 
  const dropdown = document.querySelector('.dropdown');
@@ -106,20 +128,5 @@ datepicker.addEventListener('change', function() {
   });
 
 
-
-
-
-
-function showBernFlow(data) {
-    const element = document.querySelector('.Zahl-Flow'); // <p class="Zahl-Flow">
-    if (!element) return; // Falls das Element nicht existiert
-
-    if (data && typeof data.bern_flow === 'number') {
-        element.textContent = data.bern_flow; // Zahl ausgeben
-    } else {
-        element.textContent = "-"; // Fallback, falls kein Wert vorhanden
-    }
-    console.log(data); // gibt die Daten der API in der Konsole aus
-    showBernFlow(data); 
 }
 
