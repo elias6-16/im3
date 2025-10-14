@@ -20,14 +20,14 @@
   </button>
 
   <form id="hauptmenue" class="dropdown-menu">
-    <label><input type="radio" name="ort" value="brienz"> Brienz</label>
-    <label><input type="radio" name="ort" value="interlaken"> Interlaken</label>
-    <label><input type="radio" name="ort" value="thun"> Thun</label>
-    <label><input type="radio" name="ort" value="bern" checked> Bern</label>
-    <label><input type="radio" name="ort" value="hagneck"> Hagneck</label>
-    <label><input type="radio" name="ort" value="biel"> Biel</label>
-    <label><input type="radio" name="ort" value="olten"> Olten</label>
-    <label><input type="radio" name="ort" value="brugg"> Brugg</label>
+    <label><input type="radio" name="city" value="brienz"> Brienz</label>
+    <label><input type="radio" name="city" value="interlaken"> Interlaken</label>
+    <label><input type="radio" name="city" value="thun"> Thun</label>
+    <label><input type="radio" name="city" value="bern" checked> Bern</label>
+    <label><input type="radio" name="city" value="hagneck"> Hagneck</label>
+    <label><input type="radio" name="city" value="biel"> Biel</label>
+    <label><input type="radio" name="city" value="olten"> Olten</label>
+    <label><input type="radio" name="city" value="brugg"> Brugg</label>
   </form>
 </nav>
 
@@ -42,21 +42,19 @@
     <h1 class="title" id="title">Wie viel Wasser fliesst in der Aare?</h1>
         <main>
             <div class="Wassertemperatur">
-              <p class="Zahl-Temp">25&deg;C</p>
+              <p class="Zahl-Temp" id="cityTemp">25&deg;C</p>
               <p class="Text-Temp">Wassertemperatur</p>
             </div>
             
            <div class="Flow">
               <div class="Flow-Value">
-               <p class="Zahl-Flow">25</p>
+               <p class="Zahl-Flow" id="cityFlow">25</p>
                <p class="Einheit-Flow">m³/s</p>
               </div>
                <p class="Text-Flow">fliessen in der Aare</p>
               </div>
                 <input type="datetime-local" id="datePicker">
-
-              <!-- Test -->
-              <span id="bernFlow">—</span>
+              
         </main>
 
     <script src="js/script.js" type="module"></script>

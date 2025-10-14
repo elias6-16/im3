@@ -18,7 +18,8 @@ async function getByDate(date) {
         const response = await fetch(url); // holt die Daten von der API
         const data = await response.json(); // lädt die Daten als JSON
         console.log(data); // gibt die Daten der API in der Konsole aus
-            renderBernFlow(data);
+            // Übergabe der Daten an die Render-Funktion
+            renderFromApi(data);
     } catch (error) {
     console.error(error)
     }
@@ -55,19 +56,52 @@ datepicker.addEventListener('change', function() {
     getByDate(date); // API-Aufruf mit dem formatierten Datum
 });
 
-function renderBernFlow(result) {
-  // API liefert Array mit 1 Objekt ODER direkt ein Objekt
-  const row = Array.isArray(result) ? result[0] : result;
-
-  const el = document.getElementById("bernFlow");
-  if (!el) {
-    console.warn("Element #bernFlow nicht gefunden");
-    return;
-  }
-
-  el.textContent = (row && row.bern_flow != null) ? row.bern_flow : "—";
 
 
+// — Datenpuffer —
+let latestData = null;
+
+// Normalisieren: Array[0] oder Objekt
+function normalizeResult(result) {
+  return Array.isArray(result) ? result[0] : result;
+}
+
+// Wird vom Fetch aufgerufen
+function renderFromApi(result) {
+  latestData = normalizeResult(result);
+  updateCityValues(); // direkt aktuelle Auswahl anzeigen
+}
+
+// Werte laut ausgewählter Stadt schreiben
+function updateCityValues() {
+  if (!latestData) return;
+
+  const active = document.querySelector('input[name="city"]:checked');
+  if (!active) return;
+
+  const city = active.value; // z.B. "bern"
+  const flow = latestData[`${city}_flow`];
+  const temp = latestData[`${city}_temperature`];
+
+  const flowEl = document.getElementById("cityFlow");
+  const tempEl = document.getElementById("cityTemp");
+
+  if (flowEl) flowEl.textContent = (flow ?? "—");
+  if (tempEl) tempEl.textContent = (temp ?? "—");
+}
+
+// ---- ROBUST: Warten bis DOM fertig & Event-Delegation ----
+document.addEventListener("DOMContentLoaded", () => {
+  // Delegation: funktioniert auch, wenn Radios dynamisch gerendert werden
+  document.addEventListener("change", (e) => {
+    if (e.target && e.target.matches('input[name="city"]')) {
+      updateCityValues();
+    }
+  });
+
+  // Initial versuchen zu rendern (falls schon Daten da)
+  updateCityValues();
+});
 
 
 
@@ -75,7 +109,6 @@ function renderBernFlow(result) {
 
 
 
-  
 // Navigation Animiert
 
  const dropdown = document.querySelector('.dropdown');
@@ -128,5 +161,5 @@ function renderBernFlow(result) {
   });
 
 
-}
+
 
