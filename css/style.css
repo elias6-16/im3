@@ -21,14 +21,18 @@ body {
 
 /* ==================== HINTERGRUNDVIDEO ==================== */
 #background-video {
-  position: fixed;
-  top: 0;
+  position: absolute;
   left: 0;
+  bottom: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  transform: translateY(var(--wave-shift, 0%));
+  transition: transform 600ms ease;  /* weiche Bewegung */
+  will-change: transform;
   z-index: -1; /* hinter Inhalt */
 }
+
+
 
 /* ==================== HEADER ==================== */
 .header {
@@ -43,7 +47,7 @@ body {
 }
 
 /* Kalender oben links */
-#dateTime {
+#datePicker {
   background: #000;
   color: #fff;
   border: none;
@@ -54,7 +58,7 @@ body {
   cursor: pointer;
 }
 
-#dateTime::-webkit-calendar-picker-indicator {
+#datePicker::-webkit-calendar-picker-indicator {
   filter: invert(1);
   cursor: pointer;
 }
@@ -195,7 +199,7 @@ body {
 /* Text darunter */
 .Text-Flow {
   margin-top: 0.4rem;
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 600;
 }
 

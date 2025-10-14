@@ -87,7 +87,8 @@ function updateCityValues() {
   const tempEl = document.getElementById("cityTemp");
 
   if (flowEl) flowEl.textContent = (flow ?? "—");
-  if (tempEl) tempEl.textContent = (temp ?? "—");
+  if (tempEl) tempEl.textContent = (temp != null ? `${temp}°C` : "—");
+    setWaveShiftFromFlow(flow);
 }
 
 // ---- ROBUST: Warten bis DOM fertig & Event-Delegation ----
@@ -161,5 +162,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
+// Konfiguration für die Kalibrierung vom Video
+const FLOW_MIN = 0;      
+const FLOW_MAX = 400;    
+const SHIFT_LOW  = 20;   // in %, wohin bei niedrigem Flow geschoben wird (nach unten)
+const SHIFT_HIGH = -20;  // in %, wohin bei hohem Flow geschoben wird (nach oben)
 
+function mapFlowToShift(flow) {
+  if (flow == null || isNaN(flow)) return 0; // keine Änderung bei fehlenden Werten
+  const t = Math.max(0, Math.min(1, (flow - FLOW_MIN) / (FLOW_MAX - FLOW_MIN))); // 0..1
+  return SHIFT_LOW + (SHIFT_HIGH - SHIFT_LOW) * t; // linear interpoliert
+}
+
+function setWaveShiftFromFlow(flow) {
+  const shift = mapFlowToShift(flow);
+  const video = document.getElementById("background-video");
+  if (video) video.style.setProperty("--wave-shift", `${shift}%`);
+}
 
