@@ -58,4 +58,54 @@ radios.forEach(radio => {
   // Nur Vergangenes erlauben → max = aktuelles Datum/Zeit
   input.max = localISOTime;
 
+// Navigation Animiert
+
+ const dropdown = document.querySelector('.dropdown');
+  const toggleButton = document.querySelector('.dropdown-toggle');
+  const form = document.getElementById('hauptmenue');
+  const labels = form.querySelectorAll('label');
+  const selectedText = document.getElementById('selected-location').childNodes[0];
+  const arrow = document.querySelector('.arrow');
+
+  // Menü auf/zu bei Klick auf Button
+  toggleButton.addEventListener('click', () => {
+    dropdown.classList.toggle('active');
+  });
+
+  // Klick auf Label -> Auswahl übernehmen + speichern
+  labels.forEach(label => {
+    label.addEventListener('click', () => {
+      const input = label.querySelector('input');
+      input.checked = true;
+
+      const ortName = label.textContent.trim();
+      selectedText.textContent = ortName;
+
+      // Speichern im localStorage
+      localStorage.setItem('ausgewählterOrt', ortName.toLowerCase());
+
+      dropdown.classList.remove('active');
+    });
+  });
+
+  // Klick außerhalb -> Menü schließen
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('active');
+    }
+  });
+
+  // Beim Laden: gespeicherten Wert abrufen
+  window.addEventListener('DOMContentLoaded', () => {
+    const gespeicherterOrt = localStorage.getItem('ausgewählterOrt');
+    if (gespeicherterOrt) {
+      // Button-Text anpassen
+      const capitalized = gespeicherterOrt.charAt(0).toUpperCase() + gespeicherterOrt.slice(1);
+      selectedText.textContent = capitalized;
+
+      // Das passende Radio-Feld aktivieren
+      const input = document.querySelector(`input[value="${gespeicherterOrt}"]`);
+      if (input) input.checked = true;
+    }
+  });
 

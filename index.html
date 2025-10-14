@@ -13,18 +13,24 @@
     <input type="datetime-local" id="dateTime" step="3600">
     
 <!-- Radiobutton-Menü -->
-<nav>
-  <form id="hauptmenue">
-    <label><input type="radio" name="ort" value="brienz" checked>Brienz</label><br>
-    <label><input type="radio" name="ort" value="interlaken">Interlaken</label><br>
-    <label><input type="radio" name="ort" value="thun">Thun</label><br>
-    <label><input type="radio" name="ort" value="bern">Bern</label><br>
-    <label><input type="radio" name="ort" value="hagneck">Hagneck</label><br>
-    <label><input type="radio" name="ort" value="biel">Biel</label><br>
-    <label><input type="radio" name="ort" value="olten">Olten</label><br>
-    <label><input type="radio" name="ort" value="brugg">Brugg</label>
+<nav class="dropdown">
+  <button type="button" class="dropdown-toggle" id="selected-location">
+    Bern
+    <span class="arrow">&#9660;</span>
+  </button>
+
+  <form id="hauptmenue" class="dropdown-menu">
+    <label><input type="radio" name="ort" value="brienz"> Brienz</label>
+    <label><input type="radio" name="ort" value="interlaken"> Interlaken</label>
+    <label><input type="radio" name="ort" value="thun"> Thun</label>
+    <label><input type="radio" name="ort" value="bern" checked> Bern</label>
+    <label><input type="radio" name="ort" value="hagneck"> Hagneck</label>
+    <label><input type="radio" name="ort" value="biel"> Biel</label>
+    <label><input type="radio" name="ort" value="olten"> Olten</label>
+    <label><input type="radio" name="ort" value="brugg"> Brugg</label>
   </form>
 </nav>
+
 </header>
 
 <body>

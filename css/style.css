@@ -59,44 +59,97 @@ body {
   cursor: pointer;
 }
 
-/* ==================== NAVIGATION ==================== */
-nav {
+/*Navigation Neu
+
+/* Grundstruktur */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  font-family: sans-serif;
+}
+
+/* Button mit ausgewähltem Ort */
+.dropdown-toggle {
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 20px;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  position: relative;
+  justify-content: space-between;
+  min-width: 150px;
+  gap: 0.5rem;
 }
 
-/* Burger-Button für mobile Ansicht */
-.burger {
+/* Pfeil */
+.dropdown-toggle .arrow {
+  transition: transform 0.3s ease;
+}
+
+/* Dropdown-Menü */
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
   background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  padding: 0.5rem 0.8rem;
-  cursor: pointer;
-  display: none; /* Desktop standardmäßig ausgeblendet */
+  border-radius: 20px;
+  display: none;
+  flex-direction: column;
+  padding: 0.0rem 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  animation: fadeDown 0.25s ease;
+  z-index: 100;
+  min-width: 150px;
 }
 
-/* Menüeinträge (Desktop) */
-#hauptmenue {
-  list-style: none;
+/* Animiertes Einblenden */
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sichtbar, wenn aktiv */
+.dropdown.active .dropdown-menu {
   display: flex;
-  gap: 1rem;
 }
 
-#hauptmenue li a {
-  background: #000;
+/* Pfeil nach oben bei aktivem Menü */
+.dropdown.active .arrow {
+  transform: rotate(180deg);
+}
+
+/* Labels im Menü */
+#hauptmenue label {
   color: #fff;
-  text-decoration: none;
-  border-radius: 25px;
-  padding: 0.5rem 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 15px;
+  cursor: pointer;
   transition: background 0.2s ease;
+  display: block;
 }
 
-#hauptmenue li a:hover {
-  background: #222;
+/* Hover-Farbe */
+#hauptmenue label:hover {
+  background: #999;
 }
+
+/* Inputs ausblenden */
+#hauptmenue input[type="radio"] {
+  display: none;
+}
+
 
 /* ==================== TITEL UND TEMPERATUR ==================== */
 .title {
