@@ -1,4 +1,4 @@
- // Fetch
+ // Fetch mit getAll.php
  /*async function getAll() {
    const url = 'https://im3.bevoelker-o-mat.ch/backend/api/getALL.php';
     try {
@@ -11,52 +11,48 @@
     }
     getAll(); */
 
-
-    async function getByDate(date) {
-   const url = `https://im3.bevoelker-o-mat.ch/backend/api/getByDate.php?date=${date}`;
+ // Fetch mit getByDate.php
+async function getByDate(date) {
+    const url = `https://im3.bevoelker-o-mat.ch/backend/api/getByDate.php?date=${date}`;
     try {
         const response = await fetch(url); // holt die Daten von der API
         const data = await response.json(); // lädt die Daten als JSON
         console.log(data); // gibt die Daten der API in der Konsole aus
-            const zahlFlow = document.querySelector('.Zahl-Flow');
-            zahlFlow.textContent = data.bern_flow;
     } catch (error) {
     console.error(error)
     }
     }
-    getByDate();
+getByDate();
 
- const datepicker = document.querySelector('#datePicker');
-    datepicker.addEventListener('change', function() {
-        const date = datepicker.value;
-        getByDate(date);
-        console.log(date);
-    });
+const datepicker = document.querySelector('#datePicker');
 
-// Eventlistener für Radiobuttons
-const radios = document.querySelectorAll('#hauptmenue input[name="ort"]');
-radios.forEach(radio => {
-  radio.addEventListener('change', () => {
-    const ort = radio.value;
-    const heute = new Date().toISOString().split('T')[0]; // z. B. "2025-10-13"
-    getByDate(heute, ort);
-  });
+datepicker.addEventListener('change', function() {
+    // Eingabe lesen und Date-Objekte erstellen
+    let selected = new Date(this.value);
+    const now = new Date();
+    // Falls Datum in der Zukunft → auf aktuelle Zeit zurücksetzen
+    if (selected > now) {
+        selected = now;
+        // Sichtbar im Input-Feld aktualisieren (lokales Format)
+        const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+            .toISOString()
+            .slice(0, 16); // z. B. "2025-10-14T11:00"
+        this.value = localISO; 
+    }
+    // Minuten, Sekunden & Millisekunden auf 0 setzen → volle Stunde
+    selected.setMinutes(0, 0, 0);
+    console.log('Gerundetes, verwendetes Datum:', selected);
+    // Formatierung: "YYYY-MM-DD HH:00:00" (SQL-kompatibel)
+    const date = (() => {
+        const year = selected.getFullYear();
+        const month = String(selected.getMonth() + 1).padStart(2, '0');
+        const day = String(selected.getDate()).padStart(2, '0');
+        const hour = String(selected.getHours()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hour}:00:00`;
+    })();
+    console.log(date); // z. B. "2025-10-14 11:00:00", formatiert für API
+    getByDate(date); // API-Aufruf mit dem formatierten Datum
 });
-    
-  // Aktuelles Datum und Uhrzeit abrufen
-  const now = new Date();
-  now.setMinutes(0, 0, 0); // Minuten & Sekunden auf 0 setzen
-
-  // Zeitzonen-Korrektur (lokale Zeit)
-  const tzOffset = now.getTimezoneOffset() * 60000;
-  const localISOTime = new Date(now - tzOffset).toISOString().slice(0,16);
-
-  // Feldwert auf aktuelle (letzte volle) Stunde setzen
-  const input = document.getElementById('dateTime');
-  input.value = localISOTime;
-
-  // Nur Vergangenes erlauben → max = aktuelles Datum/Zeit
-  input.max = localISOTime;
 
 // Navigation Animiert
 
@@ -108,4 +104,22 @@ radios.forEach(radio => {
       if (input) input.checked = true;
     }
   });
+
+
+
+
+
+
+function showBernFlow(data) {
+    const element = document.querySelector('.Zahl-Flow'); // <p class="Zahl-Flow">
+    if (!element) return; // Falls das Element nicht existiert
+
+    if (data && typeof data.bern_flow === 'number') {
+        element.textContent = data.bern_flow; // Zahl ausgeben
+    } else {
+        element.textContent = "-"; // Fallback, falls kein Wert vorhanden
+    }
+    console.log(data); // gibt die Daten der API in der Konsole aus
+    showBernFlow(data); 
+}
 
