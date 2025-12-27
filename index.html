@@ -36,24 +36,26 @@
 <body>
 
 
-    <video autoplay muted loop playsinline id="background-video">
-      <source src="assets/video/animation_final.mp4" type="video/mp4" />
-    </video>
+    <div class="hero">
+  <video autoplay muted loop playsinline id="background-video">
+    <source src="assets/video/animation_final.mp4" type="video/mp4" />
+  </video>
+</div>
 
 
     <h1 class="title" id="title">Wie viel Wasser fliesst in der Aare?</h1>
         <main>
             <div class="Wassertemperatur">
-              <p class="Zahl-Temp" id="cityTemp">25&deg;C</p>
+              <p class="Zahl-Temp" id="cityTemp">0&deg;C</p>
               <p class="Text-Temp">Wassertemperatur</p>
             </div>
             
            <div class="Flow">
               <div class="Flow-Value">
-               <p class="Zahl-Flow" id="cityFlow">25</p>
+               <p class="Zahl-Flow" id="cityFlow">0</p>
                <p class="Einheit-Flow">m³/s</p>
               </div>
-               <p class="Text-Flow">fliessen in der Aare</p>
+                 <p id="statusText" class="Text-Flow"></p>
               </div>
               
         </main>
