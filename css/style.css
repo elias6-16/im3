@@ -29,6 +29,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 200;
 }
 
 /* Kalender oben links */
@@ -55,7 +56,6 @@ body {
   position: relative;
   display: inline-block;
   font-family: sans-serif;
-  z-index: 100;
 }
 
 /* Button mit ausgewähltem Ort */
@@ -78,7 +78,6 @@ body {
 /* Pfeil */
 .dropdown-toggle .arrow {
   transition: transform 0.3s ease;
-  z-index: 100;
 }
 
 /* Dropdown-Menü */
@@ -307,7 +306,6 @@ main {
 }
 
 /* Setzt den Inhalt über das Video */
-.header,
 .title,
 main {
   z-index: 1;
