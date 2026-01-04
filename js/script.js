@@ -17,12 +17,11 @@ async function getByDate(date) {
 const datepicker = document.querySelector('#datePicker');
 // Funktion zur Aktualisierung des Datums
 function updateDate(dateObj) {
-    // Minuten, Sekunden & Millisekunden auf 0 setzen → volle Stunde
+    // Minuten, Sekunden & Millisekunden auf 0 setzen - volle Stunde
     dateObj.setMinutes(0, 0, 0);
-    // ISO-Format für Input-Feld (lokale Zeit)
     const localISO = new Date(dateObj.getTime() - dateObj.getTimezoneOffset() * 60000)
         .toISOString()
-        .slice(0, 16); // z. B. "2025-10-14T11:00"
+        .slice(0, 16);
     datepicker.value = localISO;
     // Formatierung: "YYYY-MM-DD HH:00:00" (SQL-kompatibel)
     const formatted = (() => {
@@ -34,13 +33,13 @@ function updateDate(dateObj) {
     })();
     console.log('Gerundetes, verwendetes Datum:', formatted);
     getByDate(formatted); // API-Aufruf mit formatiertem Datum
-    updateStatusText(); // Status-Text aktualisieren
+    updateStatusText();
 }
 // Eventlistener für manuelle Änderung vom Datum
 datepicker.addEventListener('change', function() {
     let selected = new Date(this.value);
     const now = new Date();
-    // Falls Datum in der Zukunft → auf aktuelle Zeit zurücksetzen
+    // Falls Datum in der Zukunft, auf aktuelle Zeit zurücksetzen
     if (selected > now) selected = now;
     updateDate(selected);
 });
@@ -52,11 +51,8 @@ window.addEventListener('DOMContentLoaded', () => {
     updateStatusText();
 });
 
-
-
-// — Datenpuffer —
+// Letzte API-Daten zwischenspeichern
 let latestData = null;
-// Normalisieren: Array[0] oder Objekt
 function normalizeResult(result) {
   return Array.isArray(result) ? result[0] : result;
 }
@@ -73,16 +69,26 @@ function updateCityValues() {
   const active = document.querySelector('input[name="city"]:checked');
   if (!active) return;
 
-  const city = active.value; // z.B. "bern"
+  const city = active.value;
 
-  // Keys aus der API: bern_flow, bern_temperature, usw.
+
   const flow = latestData[`${city}_flow`];
   const temp = latestData[`${city}_temperature`];
 
   const flowEl = document.getElementById("cityFlow");
   const tempEl = document.getElementById("cityTemp");
+  const unitEl = document.querySelector(".Einheit-Flow");
 
-  if (flowEl) flowEl.textContent = (flow ?? "—");
+  // Flow + Einheit nur anzeigen, wenn Flow vorhanden ist
+  if (flow == null) {
+    if (flowEl) flowEl.textContent = "";
+    if (unitEl) unitEl.style.display = "none";
+  } else {
+    if (flowEl) flowEl.textContent = flow;
+    if (unitEl) unitEl.style.display = "inline";
+  }
+
+  // Temperatur anzieigen (oder "—" wenn nicht vorhanden)
   if (tempEl) tempEl.textContent = (temp != null ? `${temp}°C` : "—");
 
   // Video-Shift passend zum Flow
@@ -114,7 +120,16 @@ function updateStatusText() {
   const label = activeCity.closest("label");
   const cityName = label ? label.textContent.trim() : "";
 
-  statusText.textContent = `flossen am ${datePart}, ${timePart} Uhr in ${cityName}.`;
+
+  const flowKey = `${activeCity.value}_flow`;
+  const flowValue = latestData?.[flowKey];
+
+  // Wenn kein Flow-Wert, anderen Text anzeigen
+  if (flowValue == null) {
+  statusText.textContent = `Wir haben derzeit keine Daten zur Druchflussmenge in ${cityName}.`;}
+  // Ansonsten normalen Text
+  else {statusText.textContent = `flossen am ${datePart}, ${timePart} Uhr in ${cityName}.`;
+}
 }
 
 
@@ -143,7 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const label = input.closest("label");
     if (label) selectedText.textContent = label.textContent.trim();
 
-    // sofort neu zeichnen (falls Daten schon da sind)
     updateCityValues();
     updateStatusText();
   };
@@ -156,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!dropdown.contains(e.target)) dropdown.classList.remove("active");
   });
 
-  // Ein einziger Listener fuer die ganze Liste (statt labels.forEach)
+  // Listener für die ganze Liste
   form.addEventListener("click", (e) => {
     const label = e.target.closest("label");
     if (!label) return;
@@ -168,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setCity(input);
   });
 
-  // Beim Laden: gespeicherten Ort setzen (oder die HTML-Default-Auswahl nehmen)
+  // Beim Laden: gespeicherten Ort setzen (oder Default-Auswahl nehmen)
   const saved = localStorage.getItem("ausgewaehlterOrt");
   const initialInput =
     (saved && form.querySelector(`input[name="city"][value="${saved}"]`)) ||

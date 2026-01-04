@@ -14,7 +14,7 @@ Dropdown-Menüs funktionierten auf Mobile zunächst nicht korrekt, da der Z-Inde
 Die automatische Aktualisierung der Daten bei der Eingabe von einem neuen Ort funktionierte lange nicht. Beim Datum funktionierte es. 
 Die Positionierung von Header-Elementen über Video war fehleranfällig.
 Das Video verschiebte sich lange nicht korrekt mit den neuen Daten vom Wasserstand. Das Problem war, dass wir mit den falschen CSS-Attributen arbeiteten. 
-
+Wir erhalten von Olten seit einiger Zeit keine Daten mehr zur Durchflussmenge. Damit nicht einfach "- m3/s" steht, haben wir eine Absicherung eingefügt, die eine Fehlermeldung anzeigt. 
 
 
 Benutzte Ressourcen
